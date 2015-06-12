@@ -17,7 +17,7 @@ from flask import Flask
 from flask.ext.cqlalchemy import CQLAlchemy
 
 app = Flask(__name__)
-app.config['CASSANDRA_DB'] = ['127.0.0.1']
+app.config['CASSANDRA_HOSTS'] = ['127.0.0.1']
 app.config['CASSANDRA_KEYSPACE'] = "cqlengine"
 db = CQLAlchemy(app)
 
@@ -37,3 +37,13 @@ Start a python shell
 >>user1.save()
 ```
 For a complete list of available method refer to the cqlengine [Model documentation](http://datastax.github.io/python-driver/api/cassandra/cqlengine/models.html)
+
+## Configuration Options
+CQLAlchemy provides all the option available in the cqlengine connection.setup() method
+
+* CASSANDRA_HOSTS - A list of hosts
+* CASSANDRA_KEYSPACE - The default keyspace to use
+* CASSANDRA_CONSISTENCY - The global default ConsistencyLevel
+* CASSANDRA_LAZY_CONNECT - True if should not connect until first use
+* CASSANDRA_RETRY_CONNECT - True if we should retry to connect even if there was a connection failure initially
+* CASSANDRA_SETUP_KWARGS - Pass-through keyword arguments for Cluster()
