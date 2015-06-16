@@ -1,5 +1,5 @@
 from cassandra.cqlengine import connection
-from cassandra.cqlengine.management import sync_table
+from cassandra.cqlengine.management import sync_table, create_keyspace_simple
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 
@@ -36,3 +36,9 @@ class CQLAlchemy(object):
                          retry_connect=retry_connect,
                          **setup_kwargs
                          )
+
+    def create_all(self):
+        create_keyspace_simple(self._default_keyspace_, 2)
+        models = [cls for cls in self.Model.__subclasses__()]
+        for model in models:
+            sync_table(model)
