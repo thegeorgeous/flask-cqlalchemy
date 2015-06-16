@@ -1,15 +1,16 @@
 """
 Flask-CQLAlchemy
----------------
+----------------
 
 Flask-CQLAlchemy handles connections to Cassandra clusters
 and gives a unified easier way to declare models and their
 columns
 
-
 Links
 `````
+
 * `documentation <http://flask-cqlalchemy.readthedocs.org>`_
+
 
 """
 
@@ -17,7 +18,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='0.1.1.dev1',
+    version='0.1.3',
     url='http://thegeorgeous.github.io/flask-cqlalchemy',
     license='BSD',
     author='George',
@@ -34,7 +35,7 @@ setup(
         'blist'
     ],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
