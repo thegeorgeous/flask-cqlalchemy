@@ -42,3 +42,8 @@ class CQLAlchemy(object):
         models = [cls for cls in self.Model.__subclasses__()]
         for model in models:
             sync_table(model)
+
+    def sync_db(self):
+        models = [cls for cls in self.Model.__subclasses__()]
+        for model in models:
+            sync_table(model)
