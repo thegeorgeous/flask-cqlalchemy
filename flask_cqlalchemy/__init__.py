@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+flask_cqlalchemy
+
+:copyright: (c) 2015 by George Thomas
+:license: BSD, see LICENCSE for more details
+
+"""
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import sync_table, create_keyspace_simple
 from cassandra.cqlengine import columns
@@ -10,8 +18,14 @@ except ImportError:
 
 
 class CQLAlchemy(object):
+    """The CQLAlchemy class. All CQLEngine methods are available as methods of
+    Model or columns attribute in this class.
+    No teardown method is available as connections are costly and once made are
+    ideally not disconnected.
+    """
 
     def __init__(self, app=None):
+        """Constructor for the class"""
         self.columns = columns
         self.Model = Model
         self.app = app
@@ -20,6 +34,11 @@ class CQLAlchemy(object):
             self.init_app(app)
 
     def init_app(self, app):
+        """Bind the CQLAlchemy object to the app.
+
+        This method set all the config options for the connection to
+        the Cassandra cluster and creates a connection at startup.
+        """
         self._hosts_ = app.config['CASSANDRA_HOSTS']
         self._default_keyspace_ = app.config['CASSANDRA_KEYSPACE']
         consistency = app.config.get('CASSANDRA_CONSISTENCY', 1)
@@ -38,12 +57,19 @@ class CQLAlchemy(object):
                          )
 
     def create_all(self):
+        """Creates all the keyspaces and tables necessary for the app.
+        If run from a shell, all defined models must be imported before
+        this method is called
+        """
         create_keyspace_simple(self._default_keyspace_, 2)
         models = [cls for cls in self.Model.__subclasses__()]
         for model in models:
             sync_table(model)
 
     def sync_db(self):
+        """Sync all defined tables. All defined models must be imported before
+        this method is called
+        """
         models = [cls for cls in self.Model.__subclasses__()]
         for model in models:
             sync_table(model)

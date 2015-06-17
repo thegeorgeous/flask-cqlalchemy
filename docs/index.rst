@@ -47,8 +47,8 @@ Start a python shell
 
 .. code-block:: guess
 
-   >>from example_app import db
-   >>from example_app import User
+   >>from example_app import db, User
+   >>db.create_all()
    >>user1 = User(username='John Doe')
    >>user1.save()
 
