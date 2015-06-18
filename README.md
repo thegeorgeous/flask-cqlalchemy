@@ -47,3 +47,6 @@ CQLAlchemy provides all the option available in the cqlengine connection.setup()
 * CASSANDRA_LAZY_CONNECT - True if should not connect until first use
 * CASSANDRA_RETRY_CONNECT - True if we should retry to connect even if there was a connection failure initially
 * CASSANDRA_SETUP_KWARGS - Pass-through keyword arguments for Cluster()
+
+## Tutorial
+For a tutorial on how to use Flask-CQLAlchemy check this [post](http://thegeorgeous.com/2015/06/17/creating-a-tumblelog-with-flask-and-flask-cqlalchemy-I.html)
