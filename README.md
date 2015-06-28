@@ -1,5 +1,10 @@
 # Flask-CQLAlchemy
 
+[![Latest Version](https://img.shields.io/pypi/v/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
+[![Downloads](https://img.shields.io/pypi/dm/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
+
+
+
 Flask-CQLAlchemy handles connections to Cassandra clusters
 and gives a unified easier way to declare models and their
 columns
@@ -29,7 +34,6 @@ class User(db.Model):
 
 ## Usage
 Start a python shell
-
 ```
 >>from example_app import db, User
 >>db.create_all()
