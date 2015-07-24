@@ -65,3 +65,13 @@ CQLAlchemy provides all the option available in the cqlengine connection.setup()
 * CASSANDRA_RETRY_CONNECT - True if we should retry to connect even if there was
   a connection failure initially
 * CASSANDRA_SETUP_KWARGS - Pass-through keyword arguments for Cluster()
+
+API
+---
+CQLAlchemy provides some helper methods for Cassandra database management
+
+**create_all()** - Creates the default keyspace if it does not exist and creates tables inside the keyspace corresponding to the models declared in the application
+
+**sync_db()** - Syncs all the tables corresponding to the models declared in the application
+
+**set_keyspace()** - Sets the keyspace for a session. Keyspaces once set will remain the default keyspace for the duration of the session. If the change is temporary, it must be reverted back to the default keyspace explicitly.
