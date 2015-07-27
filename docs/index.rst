@@ -48,7 +48,7 @@ Start a python shell
 .. code-block:: guess
 
    >>from example_app import db, User
-   >>db.create_all()
+   >>db.sync_db()
    >>user1 = User(username='John Doe')
    >>user1.save()
 
@@ -70,8 +70,6 @@ API
 ---
 CQLAlchemy provides some helper methods for Cassandra database management
 
-**create_all()** - Creates the default keyspace if it does not exist and creates tables inside the keyspace corresponding to the models declared in the application
-
-**sync_db()** - Syncs all the tables corresponding to the models declared in the application
+**sync_db()** - Creates/Syncs all the tables corresponding to the models declared in the application
 
 **set_keyspace()** - Sets the keyspace for a session. Keyspaces once set will remain the default keyspace for the duration of the session. If the change is temporary, it must be reverted back to the default keyspace explicitly.

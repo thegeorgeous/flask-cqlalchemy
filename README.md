@@ -36,7 +36,7 @@ class User(db.Model):
 Start a python shell
 ```
 >>from example_app import db, User
->>db.create_all()
+>>db.sync_db()
 >>user1 = User(username='John Doe')
 >>user1.save()
 ```

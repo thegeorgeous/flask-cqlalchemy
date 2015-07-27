@@ -57,16 +57,6 @@ class CQLAlchemy(object):
                          retry_connect=retry_connect,
                          **setup_kwargs)
 
-    def create_all(self):
-        """Creates all the keyspaces and tables necessary for the app.
-        If run from a shell, all defined models must be imported before
-        this method is called
-        """
-        create_keyspace_simple(self._keyspace_, 2)
-        models = [cls for cls in self.Model.__subclasses__()]
-        for model in models:
-            sync_table(model)
-
     def sync_db(self):
         """Sync all defined tables. All defined models must be imported before
         this method is called
