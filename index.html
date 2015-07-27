@@ -65,8 +65,8 @@ class User(db.Model):
 
 <p>Start a python shell</p>
 
-<pre><code>&gt;&gt;from example_app import db
-&gt;&gt;from example_app import User
+<pre><code>&gt;&gt;from example_app import db, User
+&gt;&gt;db.sync_db()
 &gt;&gt;user1 = User(username='John Doe')
 &gt;&gt;user1.save()
 </code></pre>
@@ -86,6 +86,11 @@ class User(db.Model):
 <li>CASSANDRA_RETRY_CONNECT - True if we should retry to connect even if there was a connection failure initially</li>
 <li>CASSANDRA_SETUP_KWARGS - Pass-through keyword arguments for Cluster()</li>
 </ul>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>Detailed Documentation can be found <a href="http://flask-cqlalchemy.readthedocs.org/">here</a></p>
 
 <h3>
 <a id="tutorial" class="anchor" href="#tutorial" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tutorial</h3>
