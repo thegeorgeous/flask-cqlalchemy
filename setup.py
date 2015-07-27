@@ -18,8 +18,8 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='0.1.3',
-    url='http://thegeorgeous.github.io/flask-cqlalchemy',
+    version='0.2.0',
+    url='http://thegeorgeous.com/flask-cqlalchemy',
     license='BSD',
     author='George',
     author_email='iamgeorgethomas@gmail.com',
@@ -35,7 +35,7 @@ setup(
         'blist'
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
@@ -45,4 +45,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]
+
 )
