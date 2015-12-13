@@ -71,7 +71,7 @@ class CQLAlchemy(object):
         this method must be called again without any arguments
         """
         if not keyspace_name:
-            keyspace_name = self._default_keyspace_
+            keyspace_name = self._keyspace_
         models.DEFAULT_KEYSPACE = keyspace_name
         self._keyspace_ = keyspace_name
 
