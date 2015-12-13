@@ -13,6 +13,7 @@ env:
 
 install:
   - pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
+  - pip install -q flask
   - python setup.py -q install
 
 script: py.test
