@@ -30,6 +30,7 @@ class CQLAlchemy(object):
         self.Model = models.Model
         self.app = app
         self.sync_table = sync_table
+        self.create_keyspace_simple = create_keyspace_simple
         if app is not None:
             self.init_app(app)
 
@@ -46,8 +47,6 @@ class CQLAlchemy(object):
         retry_connect = app.config.get('CASSANDRA_RETRY_CONNECT', False)
         setup_kwargs = app.config.get('CASSANDRA_SETUP_KWARGS', {})
 
-        # Create a keyspace with a replication factor of 2
-        # If the keyspace already exists, it will not be modified
         if not self._hosts_ and self._keyspace_:
             raise NoConfig("No Configuration options defined. At least CASSANDRA_HOSTS and CASSANDRA_CONSISTENCY must be supplied")
         connection.setup(self._hosts_,
