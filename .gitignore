@@ -13,3 +13,7 @@ docs/_build/
 # Emacs files
 .org
 tags
+
+# Vagrant files
+Vagrantfile
+.vagrant/
