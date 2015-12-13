@@ -9,3 +9,7 @@ dist/
 
 # Sphinx documentation
 docs/_build/
+
+# Emacs files
+.org
+tags
