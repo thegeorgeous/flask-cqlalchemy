@@ -31,7 +31,7 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
-        'cassandra-driver>=2.5',
+        'cassandra-driver>=2.6',
         'blist'
     ],
     classifiers=[

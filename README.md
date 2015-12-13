@@ -54,6 +54,3 @@ CQLAlchemy provides all the option available in the cqlengine connection.setup()
 
 ## Tutorial
 For a tutorial on how to use Flask-CQLAlchemy check this [post](http://thegeorgeous.com/2015/06/17/creating-a-tumblelog-with-flask-and-flask-cqlalchemy-I.html)
-
-## TODO/Help Wanted
-* Write tests to check compatibility of different cassandra driver versions
