@@ -38,8 +38,7 @@ Start a python shell
 ```
 >>from example_app import db, User
 >>db.sync_db()
->>user1 = User(username='John Doe')
->>user1.save()
+>>user1 = User.create(username='John Doe')
 ```
 For a complete list of available method refer to the cqlengine [Model documentation](http://datastax.github.io/python-driver/api/cassandra/cqlengine/models.html)
 
