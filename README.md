@@ -1,8 +1,9 @@
 # Flask-CQLAlchemy
 
 [![Latest Version](https://img.shields.io/pypi/v/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
+[![Build Status](https://travis-ci.org/thegeorgeous/flask-cqlalchemy.svg?branch=master)](https://travis-ci.org/thegeorgeous/flask-cqlalchemy)
+[![Code Climate](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy/badges/gpa.svg)](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy)
 [![Downloads](https://img.shields.io/pypi/dm/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
-
 
 
 Flask-CQLAlchemy handles connections to Cassandra clusters
@@ -13,6 +14,12 @@ columns
 ```
 pip install flask-cqlalchemy
 ```
+
+## Dependencies
+As such Flask-CQLAlchemy depends only on the cassandra-driver. It is assumed that you already have flask installed.
+
+Flask-CQLAlchemy has been tested with versions 2.6.0, 2.7.2, 3.0.0 of cassandra-driver. It is known to work with all versions >=2.5, but use it at your own risk.
+All previous versions of Flask-CQLAlchemy are deprecated.
 
 ## Example
 ```
@@ -37,8 +44,7 @@ Start a python shell
 ```
 >>from example_app import db, User
 >>db.sync_db()
->>user1 = User(username='John Doe')
->>user1.save()
+>>user1 = User.create(username='John Doe')
 ```
 For a complete list of available method refer to the cqlengine [Model documentation](http://datastax.github.io/python-driver/api/cassandra/cqlengine/models.html)
 
@@ -54,3 +60,6 @@ CQLAlchemy provides all the option available in the cqlengine connection.setup()
 
 ## Tutorial
 For a tutorial on how to use Flask-CQLAlchemy check this [post](http://thegeorgeous.com/2015/06/17/creating-a-tumblelog-with-flask-and-flask-cqlalchemy-I.html)
+
+## Contributing
+Found a bug? Need a feature? Open it in issues, or even better, open a PR. Please include tests in the PR.

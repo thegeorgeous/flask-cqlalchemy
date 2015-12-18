@@ -20,6 +20,12 @@ Installation
 
    $ pip install flask-cqlalchemy
 
+Dependencies
+------------
+As such Flask-CQLAlchemy depends only on the cassandra-driver. It is assumed that you already have flask installed.
+
+Flask-CQLAlchemy has been tested with versions 2.6.0, 2.7.2, 3.0.0 of cassandra-driver. It is known to work with all versions >=2.5, but use it at your own risk.
+All previous versions of Flask-CQLAlchemy are deprecated.
 
 Example
 -------
@@ -49,8 +55,7 @@ Start a python shell
 
    >>from example_app import db, User
    >>db.sync_db()
-   >>user1 = User(username='John Doe')
-   >>user1.save()
+   >>user1 = User.create(username='John Doe')
 
 For a complete list of available method refer to the cqlengine `Model documentation <http://datastax.github.io/python-driver/api/cassandra/cqlengine/models.html>`_
 
