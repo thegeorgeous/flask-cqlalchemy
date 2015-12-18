@@ -2,10 +2,9 @@
 Flask-CQLAlchemy
 ----------------
 
-Flask-CQLAlchemy handles connections to Cassandra clusters
-and gives a unified easier way to declare models and their
-columns
-
+Flask-CQLAlchemy handles connections to Cassandra clusters and provides a
+Flask-SQLAlchemy like interface to declare models and their columns in a Flask
+app
 Links
 `````
 
@@ -18,12 +17,12 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='0.2.0',
+    version='1.0.0',
     url='http://thegeorgeous.com/flask-cqlalchemy',
     license='BSD',
-    author='George',
+    author='George Thomas',
     author_email='iamgeorgethomas@gmail.com',
-    description='Flask-CQLAlchemy handles connections to Cassandra clusters through the cqlengine',
+    description='Flask-CQLAlchemy handles connections to Cassandra clusters and provides an interface through cqlengine',
     long_description=__doc__,
     keywords='cassandra cqlengine flask',
     packages=['flask_cqlalchemy'],
@@ -35,7 +34,7 @@ setup(
         'blist'
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
