@@ -20,6 +20,12 @@ Installation
 
    $ pip install flask-cqlalchemy
 
+Dependencies
+------------
+As such Flask-CQLAlchemy depends only on the cassandra-driver. It is assumed that you already have flask installed.
+
+Flask-CQLAlchemy has been tested with versions 2.6.0 and 2.7.2 of cassandra-driver. It is known to work with all versions >=2.5, but use it at your own risk.
+All previous versions of Flask-CQLAlchemy are deprecated.
 
 Example
 -------
