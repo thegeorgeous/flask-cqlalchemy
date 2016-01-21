@@ -30,7 +30,7 @@ class BasicTestCase(unittest.TestCase):
         self.db = db
 
     def tearDown(self):
-        drop_keyspace("cqlengine")
+        drop_keyspace("test1")
 
     def test_sync_db(self):
         self.db.sync_db()
