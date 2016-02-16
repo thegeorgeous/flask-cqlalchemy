@@ -44,5 +44,14 @@ class BasicTestCase(unittest.TestCase):
         self.assertEqual(models.DEFAULT_KEYSPACE, "test2")
         self.assertEqual(self.db._keyspace_, "test2")
 
+    def test_set_keyspace_no_args(self):
+        create_keyspace_simple("test2", 1)
+        self.db.set_keyspace('test2')
+        self.db.set_keyspace()
+        self.assertEqual(models.DEFAULT_KEYSPACE,
+                         self.app.config['CASSANDRA_KEYSPACE'])
+        self.assertEqual(self.db._keyspace_,
+                         self.app.config['CASSANDRA_KEYSPACE'])
+
 if __name__ == '__main__':
     unittest.main()

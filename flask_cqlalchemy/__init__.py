@@ -3,7 +3,7 @@
 flask_cqlalchemy
 
 :copyright: (c) 2015 by George Thomas
-:license: BSD, see LICENCSE for more details
+:license: BSD, see LICENSE for more details
 
 """
 from cassandra.cqlengine import connection
@@ -48,7 +48,10 @@ class CQLAlchemy(object):
         setup_kwargs = app.config.get('CASSANDRA_SETUP_KWARGS', {})
 
         if not self._hosts_ and self._keyspace_:
-            raise NoConfig("No Configuration options defined. At least CASSANDRA_HOSTS and CASSANDRA_CONSISTENCY must be supplied")
+            raise NoConfig(
+                """No Configuration options defined.
+                At least CASSANDRA_HOSTS and CASSANDRA_CONSISTENCY
+                must be supplied""")
         connection.setup(self._hosts_,
                          self._keyspace_,
                          consistency=consistency,
@@ -64,14 +67,14 @@ class CQLAlchemy(object):
         for model in models:
             sync_table(model)
 
-    def set_keyspace(self, keyspace_name):
+    def set_keyspace(self, keyspace_name=None):
         """ Changes keyspace for the current session if keyspace_name is
         supplied. Ideally sessions exist for the entire duration of the
         application. So if the change in keyspace is meant to be temporary,
         this method must be called again without any arguments
         """
         if not keyspace_name:
-            keyspace_name = self._keyspace_
+            keyspace_name = self.app.config['CASSANDRA_KEYSPACE']
         models.DEFAULT_KEYSPACE = keyspace_name
         self._keyspace_ = keyspace_name
 
