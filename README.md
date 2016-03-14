@@ -12,7 +12,7 @@ Flask-CQLAlchemy handles connections to Cassandra clusters
 and gives a unified easier way to declare models and their
 columns
 
-*Now with Python 3 support*
+**Now with Python 3 support**
 
 ## Installation
 ```shell
@@ -59,13 +59,13 @@ For a complete list of available method refer to the cqlengine
 CQLAlchemy provides all the option available in the cqlengine connection.setup()
 method
 
-* CASSANDRA_HOSTS - A list of hosts
-* CASSANDRA_KEYSPACE - The default keyspace to use
-* CASSANDRA_CONSISTENCY - The global default ConsistencyLevel
-* CASSANDRA_LAZY_CONNECT - True if should not connect until first use
-* CASSANDRA_RETRY_CONNECT - True if we should retry to connect even if there was
+* `CASSANDRA_HOSTS` - A list of hosts
+* `CASSANDRA_KEYSPACE` - The default keyspace to use
+* `CASSANDRA_CONSISTENCY` - The global default ConsistencyLevel
+* `CASSANDRA_LAZY_CONNECT` - True if should not connect until first use
+* `CASSANDRA_RETRY_CONNECT` - True if we should retry to connect even if there was
   a connection failure initially
-* CASSANDRA_SETUP_KWARGS - Pass-through keyword arguments for Cluster()
+* `CASSANDRA_SETUP_KWARGS` - Pass-through keyword arguments for Cluster()
 
 ## Contributing
 Found a bug? Need a feature? Open it in issues, or even better, open a PR.
