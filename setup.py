@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='1.0.2',
+    version='1.1.0',
     url='http://thegeorgeous.com/flask-cqlalchemy',
     license='BSD',
     author='George Thomas',
@@ -39,7 +39,10 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Framework :: Flask',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
