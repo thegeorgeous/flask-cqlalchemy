@@ -1,3 +1,4 @@
+import unittest
 from test_cqlalchemy import BaseTestCase
 from uuid import uuid1
 
@@ -44,3 +45,6 @@ class AbstractModelTest(BaseTestCase):
                            cuteness=9001)
         self.assertTrue(isinstance(mycat, Cat))
         self.assertGreater(mycat.cuteness, 9000)
+
+if __name__ == '__main__':
+    unittest.main()
