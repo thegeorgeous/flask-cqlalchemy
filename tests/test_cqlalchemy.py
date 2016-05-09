@@ -14,7 +14,7 @@ def make_user_model(db):
     return User
 
 
-class BasicTestCase(unittest.TestCase):
+class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
         app = Flask(__name__)
@@ -30,6 +30,9 @@ class BasicTestCase(unittest.TestCase):
 
     def tearDown(self):
         drop_keyspace("test1")
+
+
+class BasicTestCase(BaseTestCase):
 
     def test_sync_db(self):
         self.db.sync_db()
