@@ -4,8 +4,14 @@ from uuid import uuid1
 
 
 def make_abstract_model(db):
+    """Taken from
+    https://datastax.github.io/python-driver/cqlengine/models.html#model-inheritance
+
+    but where we want the base classes to be in seperate tabels
+    """
     class Pet(db.Model):
-        __table_name__ = 'pet'
+        __abstract__ = True
+        # __table_name__ = 'pet'
         owner_id = db.columns.UUID(primary_key=True)
         pet_id = db.columns.UUID(primary_key=True)
         pet_type = db.columns.Text(discriminator_column=True)
@@ -18,14 +24,14 @@ def make_abstract_model(db):
             pass
 
     class Cat(Pet):
-        __discriminator_value__ = 'cat'
+        # __discriminator_value__ = 'cat'
         cuteness = db.columns.Float()
 
         def tear_up_couch(self):
             pass
 
     class Dog(Pet):
-        __discriminator_value__ = 'dog'
+        # __discriminator_value__ = 'dog'
         fierceness = db.columns.Float()
 
         def bark_all_night(self):
