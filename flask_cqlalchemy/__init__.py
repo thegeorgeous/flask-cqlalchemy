@@ -67,7 +67,7 @@ class CQLAlchemy(object):
         """Sync all defined tables. All defined models must be imported before
         this method is called
         """
-        models = [cls for cls in self.Model.__subclasses__()]
+        models = get_subclasses(self.Model)
         for model in models:
             sync_table(model)
 
@@ -82,6 +82,21 @@ class CQLAlchemy(object):
         models.DEFAULT_KEYSPACE = keyspace_name
         self._keyspace_ = keyspace_name
 
+
 class NoConfig(Exception):
     """ Raised when CASSANDRA_HOSTS or CASSANDRA_KEYSPACE is not defined"""
     pass
+
+
+# some helper functions for masshing the class list
+def flatten(lists):
+    """flatten a list of lists into a single list"""
+    return [item for sublist in lists for item in sublist]
+
+
+def get_subclasses(cls):
+    """get all the non abstract subclasses of cls"""
+    if cls.__abstract__:
+        return flatten([get_subclasses(scls) for scls in cls.__subclasses__()])
+    else:
+        return [cls]
