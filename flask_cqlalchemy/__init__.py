@@ -2,14 +2,17 @@
 """
 flask_cqlalchemy
 
-:copyright: (c) 2015 by George Thomas
+:copyright: (c) 2015-2016 by George Thomas
 :license: BSD, see LICENSE for more details
 
 """
 from cassandra.cqlengine import connection
-from cassandra.cqlengine.management import sync_table, create_keyspace_simple
+from cassandra.cqlengine.management import (
+    sync_table, create_keyspace_simple, sync_type
+)
 from cassandra.cqlengine import columns
 from cassandra.cqlengine import models
+from cassandra.cqlengine import usertype
 
 try:
     from flask import _app_ctx_stack as stack
@@ -28,8 +31,10 @@ class CQLAlchemy(object):
         """Constructor for the class"""
         self.columns = columns
         self.Model = models.Model
+        self.UserType = usertype.UserType
         self.app = app
         self.sync_table = sync_table
+        self.sync_type = sync_type
         self.create_keyspace_simple = create_keyspace_simple
         if app is not None:
             self.init_app(app)
@@ -76,7 +81,6 @@ class CQLAlchemy(object):
             keyspace_name = self.app.config['CASSANDRA_KEYSPACE']
         models.DEFAULT_KEYSPACE = keyspace_name
         self._keyspace_ = keyspace_name
-
 
 class NoConfig(Exception):
     """ Raised when CASSANDRA_HOSTS or CASSANDRA_KEYSPACE is not defined"""
