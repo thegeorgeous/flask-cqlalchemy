@@ -1,5 +1,5 @@
 import unittest
-from test_cqlalchemy import BaseTestCase
+from .test_cqlalchemy import BaseTestCase
 from uuid import uuid1
 
 
@@ -50,7 +50,7 @@ class AbstractModelTest(BaseTestCase):
                            name="Tiddles",
                            cuteness=9001)
         self.assertTrue(isinstance(mycat, Cat))
-        self.assertGreater(mycat.cuteness, 9000)
+        self.assertEqual(mycat.cuteness, 9001)
 
 if __name__ == '__main__':
     unittest.main()
