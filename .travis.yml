@@ -1,3 +1,4 @@
+sudo: required
 services:
   - cassandra
 
@@ -8,6 +9,7 @@ python:
   - 2.7
   - 3.3
   - 3.4
+
 env:
   - CASSANDRA_DRIVER_VERSION=2.6.0
   - CASSANDRA_DRIVER_VERSION=2.7.2
@@ -16,9 +18,14 @@ env:
   - CASSANDRA_DRIVER_VERSION=3.1.1
   - CASSANDRA_DRIVER_VERSION=3.2.0
   - CASSANDRA_DRIVER_VERSION=3.2.1
+
 install:
   - pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
   - pip install -q flask
+  - pip install codeclimate-test-reporter
+  - pip install pytest-cov
   - python setup.py -q install
 
-script: py.test
+script: py.test --cov=codeclimate_test_reporter tests/
+
+after_script: codeclimate-test-reporter

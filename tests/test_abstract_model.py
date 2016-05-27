@@ -1,4 +1,5 @@
 import unittest
+import codeclimate_test_reporter
 from .test_cqlalchemy import BaseTestCase
 from uuid import uuid1
 
