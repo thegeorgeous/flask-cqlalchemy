@@ -4,6 +4,7 @@ from flask import Flask
 from flask.ext.cqlalchemy import CQLAlchemy
 from cassandra.cqlengine.management import drop_keyspace, create_keyspace_simple
 from cassandra.cqlengine import models
+from cassandra.cqlengine.usertype import UserType
 
 
 def make_user_model(db):
@@ -13,6 +14,17 @@ def make_user_model(db):
 
     return User
 
+def make_user_defined_model(db):
+    class address(db.UserType):
+        street = db.columns.Text()
+        zipcode = db.columns.Integer()
+
+    class users(db.Model):
+        __keyspace__ = 'test1'
+        name = db.columns.Text(primary_key=True)
+        addr = db.columns.UserDefinedType(address)
+
+    return (users, address)
 
 class BaseTestCase(unittest.TestCase):
 
@@ -54,6 +66,17 @@ class BasicTestCase(BaseTestCase):
                          self.app.config['CASSANDRA_KEYSPACE'])
         self.assertEqual(self.db._keyspace_,
                          self.app.config['CASSANDRA_KEYSPACE'])
+
+
+class UserDefinedTypeTestCase(BaseTestCase):
+    def test_udt(self):
+        (users, address) = make_user_defined_model(self.db)
+        self.db.sync_db()
+        user_address = address(street="Easy St.", zipcode=99999)
+        users.create(name="Joe", addr=user_address)
+        user = users.objects(name="Joe")[0]
+        self.assertEqual(user.name, "Joe")
+        self.assertEqual(user.addr, user_address)
 
 if __name__ == '__main__':
     unittest.main()
