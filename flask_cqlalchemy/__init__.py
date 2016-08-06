@@ -88,7 +88,7 @@ class NoConfig(Exception):
     pass
 
 
-# some helper functions for masshing the class list
+# some helper functions for mashing the class list
 def flatten(lists):
     """flatten a list of lists into a single list"""
     return [item for sublist in lists for item in sublist]

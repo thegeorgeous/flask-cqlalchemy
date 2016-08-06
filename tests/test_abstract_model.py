@@ -7,7 +7,7 @@ def make_abstract_model(db):
     """Taken from
     https://datastax.github.io/python-driver/cqlengine/models.html#model-inheritance
 
-    but where we want the base classes to be in seperate tabels
+    but where we want the base classes to be in separate tables
     """
     class Pet(db.Model):
         __abstract__ = True
