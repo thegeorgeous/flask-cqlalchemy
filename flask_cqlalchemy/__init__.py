@@ -2,14 +2,17 @@
 """
 flask_cqlalchemy
 
-:copyright: (c) 2015 by George Thomas
+:copyright: (c) 2015-2016 by George Thomas
 :license: BSD, see LICENSE for more details
 
 """
 from cassandra.cqlengine import connection
-from cassandra.cqlengine.management import sync_table, create_keyspace_simple
+from cassandra.cqlengine.management import (
+    sync_table, create_keyspace_simple, sync_type
+)
 from cassandra.cqlengine import columns
 from cassandra.cqlengine import models
+from cassandra.cqlengine import usertype
 
 try:
     from flask import _app_ctx_stack as stack
@@ -28,8 +31,10 @@ class CQLAlchemy(object):
         """Constructor for the class"""
         self.columns = columns
         self.Model = models.Model
+        self.UserType = usertype.UserType
         self.app = app
         self.sync_table = sync_table
+        self.sync_type = sync_type
         self.create_keyspace_simple = create_keyspace_simple
         if app is not None:
             self.init_app(app)
@@ -62,7 +67,7 @@ class CQLAlchemy(object):
         """Sync all defined tables. All defined models must be imported before
         this method is called
         """
-        models = [cls for cls in self.Model.__subclasses__()]
+        models = get_subclasses(self.Model)
         for model in models:
             sync_table(model)
 
@@ -81,3 +86,17 @@ class CQLAlchemy(object):
 class NoConfig(Exception):
     """ Raised when CASSANDRA_HOSTS or CASSANDRA_KEYSPACE is not defined"""
     pass
+
+
+# some helper functions for mashing the class list
+def flatten(lists):
+    """flatten a list of lists into a single list"""
+    return [item for sublist in lists for item in sublist]
+
+
+def get_subclasses(cls):
+    """get all the non abstract subclasses of cls"""
+    if cls.__abstract__:
+        return flatten([get_subclasses(scls) for scls in cls.__subclasses__()])
+    else:
+        return [cls]
