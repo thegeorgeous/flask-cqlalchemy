@@ -17,7 +17,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='1.1.0',
+    version='1.2.0',
     url='http://thegeorgeous.com/flask-cqlalchemy',
     license='BSD',
     author='George Thomas',
