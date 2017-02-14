@@ -1,11 +1,10 @@
 # Flask-CQLAlchemy
 
 [![Latest Version](https://img.shields.io/pypi/v/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
-[![Build Status](https://travis-ci.org/thegeorgeous/flask-cqlalchemy.svg?branch=master)](https://travis-ci.org/thegeorgeous/flask-cqlalchemy)
-[![Python Versions](https://img.shields.io/pypi/pyversions/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
 [![License](https://img.shields.io/pypi/l/Flask-CQLAlchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
+[![Python Versions](https://img.shields.io/pypi/pyversions/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
+[![Build Status](https://travis-ci.org/thegeorgeous/flask-cqlalchemy.svg?branch=master)](https://travis-ci.org/thegeorgeous/flask-cqlalchemy)
 [![Code Climate](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy/badges/gpa.svg)](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy)
-[![Downloads](https://img.shields.io/pypi/dm/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
 
 
 Flask-CQLAlchemy handles connections to Cassandra clusters
@@ -23,9 +22,11 @@ pip install flask-cqlalchemy
 As such Flask-CQLAlchemy depends only on the cassandra-driver. It is assumed
 that you already have flask installed.
 
-Flask-CQLAlchemy has been tested with versions 2.6.0, 2.7.2, 3.0.0 and 3.1.0 of
-cassandra-driver. It is known to work with all versions >=2.5, but use it at
-your own risk. All previous versions of Flask-CQLAlchemy are deprecated.
+Flask-CQLAlchemy has been tested with all minor versions greater than 2.6 of
+cassandra-driver. All previous versions of Flask-CQLAlchemy are deprecated.
+All tests are run against the latest patch version. If you have problems using
+the plugin, try updating to the latest patch version of the minor version you
+are using.
 
 ## Example
 ```python
