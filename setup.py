@@ -31,7 +31,6 @@ setup(
     platforms='any',
     install_requires=[
         'cassandra-driver>=2.6',
-        'blist'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
