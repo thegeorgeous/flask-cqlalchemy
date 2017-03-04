@@ -1,7 +1,7 @@
 import unittest
 import uuid
 from flask import Flask
-from flask.ext.cqlalchemy import CQLAlchemy
+from flask_cqlalchemy import CQLAlchemy
 from cassandra.cqlengine.management import drop_keyspace, create_keyspace_simple
 from cassandra.cqlengine import models
 
