@@ -11,7 +11,7 @@ Flask-CQLAlchemy handles connections to Cassandra clusters
 and gives a unified easier way to declare models and their
 columns
 
-**Now with support for abstract models and UserDefinedTypes**
+**Now with support for PyPy**
 
 ## Installation
 ```shell
