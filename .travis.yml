@@ -1,35 +1,32 @@
 services:
-  - cassandra
-
+- cassandra
 language: python
-
 python:
-  - 2.6
-  - 2.7
-  - 3.3
-  - 3.4
-  # pypy versions
-  - "pypy"
-  - "pypy3"
-  - "pypy-5.3.1"
+- 2.7
+- 3.4
+- pypy
+- pypy3
+- pypy-5.3.1
 env:
-  - CASSANDRA_DRIVER_VERSION=2.6.0
-  - CASSANDRA_DRIVER_VERSION=2.7.2
-  - CASSANDRA_DRIVER_VERSION=3.0.0
-  - CASSANDRA_DRIVER_VERSION=3.1.1
-  - CASSANDRA_DRIVER_VERSION=3.2.2
-  - CASSANDRA_DRIVER_VERSION=3.3.0
-  - CASSANDRA_DRIVER_VERSION=3.4.1
-  - CASSANDRA_DRIVER_VERSION=3.5.0
-  - CASSANDRA_DRIVER_VERSION=3.6.0
-  - CASSANDRA_DRIVER_VERSION=3.7.1
+- CASSANDRA_DRIVER_VERSION=2.7.2
+- CASSANDRA_DRIVER_VERSION=3.0.0
+- CASSANDRA_DRIVER_VERSION=3.3.0
+- CASSANDRA_DRIVER_VERSION=3.7.1
 matrix:
   exclude:
-  - python: "pypy3"
+  - python: pypy3
     env: CASSANDRA_DRIVER_VERSION=2.6.0
 install:
-  - pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
-  - pip install -q flask
-  - python setup.py -q install
-
+- pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
+- pip install -q flask
+- python setup.py -q install
 script: py.test
+deploy:
+  provider: pypi
+  user: RichardMathie
+  password:
+    secure: nhSqOL/W9Q74AGPMAq8s7ItCVuJh7nSx4XiKAcLB9qlG4trBMGFOWOC9LH4EvI/luEqEKz6DU/HuUxEx9CPNV75ld3p9vggUvrPk9RC2rL71XhqqDotcLNo2chbDUHgrBwzHBr88NkCejlx4GVah/i6egYOJFHK5fZqqqQaOPGmY4cQISQ33E9Kyh8dP4uYzLaDWp/TTSVkhMl/micidfOWIVAJW4vtVGupbcfIXc6QhpXWI6RNbVa9UfKEijdu2pf+p5KJSQuQz6L86bJjklZVLqGGguLdX/omdA1sF+SrrwAVwNpOTlRj+30vrVUPIk/Ifhvw20dwvHiTYW4GL38OBRicU9+rhEaEC1swbgutNoqcJgmCD8HTB3mG3hKSIkK8vSHcUZCwjVfmMhRGF4HMINi7eT1PyQIxQZsGvtQFup5vgbq2TutA/JyVEBUqx6duSk0atpkhuqo4rPT8P2SXTmWjL9jDjApY7wGRTc2EbWYD3/Ycjesi2BGkhnLqNHwL+Sa5PflNq6+BaMPxyKznvL7vaf/+kzbMQewc8JdV3ad84wkoUK5dO31o/gMqhdLdrU226B7Doj933s+ev0jT61RmAtTqtiLSYlXjbCg1WkKqbsCUuyTGRMxth57gqLP/hzdxAg386nWaSGt3iRnkTRRkFVF0h0wPqBlJzjoM=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel bdist_egg
+    branch: feature/travis_pypi
