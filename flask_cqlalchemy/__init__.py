@@ -8,7 +8,7 @@ flask_cqlalchemy
 """
 from cassandra.cqlengine import connection
 from cassandra.cqlengine.management import (
-    sync_table, create_keyspace_simple, sync_type
+    sync_table, create_keyspace_simple, sync_type, drop_keyspace, drop_table
 )
 from cassandra.cqlengine import columns
 from cassandra.cqlengine import models
@@ -35,6 +35,8 @@ class CQLAlchemy(object):
         self.app = app
         self.sync_table = sync_table
         self.sync_type = sync_type
+        self.drop_keyspace = drop_keyspace
+        self.drop_table = drop_table
         self.create_keyspace_simple = create_keyspace_simple
         if app is not None:
             self.init_app(app)
