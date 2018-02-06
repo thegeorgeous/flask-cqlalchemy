@@ -47,6 +47,7 @@ class CQLAlchemy(object):
         """
         self._hosts_ = app.config['CASSANDRA_HOSTS']
         self._keyspace_ = app.config['CASSANDRA_KEYSPACE']
+        port = app.config.get('CASSANDRA_PORT', 9042)
         consistency = app.config.get('CASSANDRA_CONSISTENCY', 1)
         lazy_connect = app.config.get('CASSANDRA_LAZY_CONNECT', False)
         retry_connect = app.config.get('CASSANDRA_RETRY_CONNECT', False)
@@ -61,6 +62,7 @@ class CQLAlchemy(object):
                          consistency=consistency,
                          lazy_connect=lazy_connect,
                          retry_connect=retry_connect,
+                         port=port,
                          **setup_kwargs)
 
     def sync_db(self):
