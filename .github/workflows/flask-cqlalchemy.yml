@@ -26,5 +26,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pip install pytest flask
+        pip install pytest 
+        pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
+        pip install -q flask
+        python setup.py -q install
         pytest
