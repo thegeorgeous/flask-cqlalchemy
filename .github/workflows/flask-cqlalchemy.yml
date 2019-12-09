@@ -27,7 +27,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest 
-        pip install -q cassandra-driver==$CASSANDRA_DRIVER_VERSION
+        pip install -q cassandra-driver
         pip install -q flask
         python setup.py -q install
         pytest
