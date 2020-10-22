@@ -49,10 +49,10 @@ class CQLAlchemy(object):
         the Cassandra cluster and creates a connection at startup.
         """
         self._hosts_ = app.config.get('CASSANDRA_HOSTS', '')
-        self._keyspace_ = app.config['CASSANDRA_KEYSPACE']
-        self._username = app.config['CASSANDRA_USERNAME']
-        self._password = app.config['CASSANDRA_PASSWORD']
-        self._cloud_bundle = app.config['ASTRA_SECURE_CONNECT_BUNDLE']
+        self._keyspace_ = app.config.get('CASSANDRA_KEYSPACE', '')
+        self._username = app.config.get('CASSANDRA_USERNAME', '')
+        self._password = app.config.get('CASSANDRA_PASSWORD', '')
+        self._cloud_bundle = app.config.get('ASTRA_SECURE_CONNECT_BUNDLE', '')
         consistency = app.config.get('CASSANDRA_CONSISTENCY', 1)
         lazy_connect = app.config.get('CASSANDRA_LAZY_CONNECT', False)
         retry_connect = app.config.get('CASSANDRA_RETRY_CONNECT', False)
