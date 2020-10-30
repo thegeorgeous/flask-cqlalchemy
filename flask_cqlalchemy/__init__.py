@@ -14,6 +14,9 @@ from cassandra.cqlengine import columns
 from cassandra.cqlengine import models
 from cassandra.cqlengine import usertype
 
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
 try:
     from flask import _app_ctx_stack as stack
 except ImportError:
@@ -45,12 +48,29 @@ class CQLAlchemy(object):
         This method set all the config options for the connection to
         the Cassandra cluster and creates a connection at startup.
         """
-        self._hosts_ = app.config['CASSANDRA_HOSTS']
-        self._keyspace_ = app.config['CASSANDRA_KEYSPACE']
+        self._hosts_ = app.config.get('CASSANDRA_HOSTS', '')
+        self._keyspace_ = app.config.get('CASSANDRA_KEYSPACE', '')
+        self._username = app.config.get('CASSANDRA_USERNAME', '')
+        self._password = app.config.get('CASSANDRA_PASSWORD', '')
+        self._cloud_bundle = app.config.get('ASTRA_SECURE_CONNECT_BUNDLE', '')
         consistency = app.config.get('CASSANDRA_CONSISTENCY', 1)
         lazy_connect = app.config.get('CASSANDRA_LAZY_CONNECT', False)
         retry_connect = app.config.get('CASSANDRA_RETRY_CONNECT', False)
         setup_kwargs = app.config.get('CASSANDRA_SETUP_KWARGS', {})
+        self._auth_provider = None
+
+        if self._username and self._password:
+            self._auth_provider = PlainTextAuthProvider(
+                                       username=self._username,
+                                       password=self._password
+                                  )
+
+        if self._cloud_bundle != None and self._auth_provider != None:
+            cloud = { 'secure_connect_bundle' : self._cloud_bundle }
+            cluster = Cluster(cloud=cloud, auth_provider=self._auth_provider)
+            session = cluster.connect(self._keyspace_)
+            connection.set_session(session)
+            return
 
         if not self._hosts_ and self._keyspace_:
             raise NoConfig("""No Configuration options defined.

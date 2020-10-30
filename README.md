@@ -7,9 +7,8 @@
 [![Code Climate](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy/badges/gpa.svg)](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy)
 
 
-Flask-CQLAlchemy handles connections to Cassandra clusters
-and gives a unified easier way to declare models and their
-columns
+Flask-CQLAlchemy handles connections to Cassandra and Astra clusters
+and gives a unified easier way to declare models and their columns.
 
 **Now with support for PyPy**
 
@@ -109,6 +108,9 @@ method
 * `CASSANDRA_RETRY_CONNECT` - True if we should retry to connect even if there was
   a connection failure initially
 * `CASSANDRA_SETUP_KWARGS` - Pass-through keyword arguments for Cluster()
+* `ASTRA_SECURE_CONNECT_BUNDLE` - Full path to the secure connect bundle for your Astra database.
+* `CASSANDRA_USERNAME` - Username to used to connect to a Cassandra cluster.
+* `CASSANDRA_PASSWORD` - Password to used to connect to a Cassandra cluster.
 
 ## Beta Features
 Flask CQLAlchemy supports User Defined Types, provided you are using Cassandra
