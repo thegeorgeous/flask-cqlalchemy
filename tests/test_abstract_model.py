@@ -1,14 +1,14 @@
 import unittest
-from .test_cqlalchemy import BaseTestCase
 from uuid import uuid1
+
+from .test_cqlalchemy import BaseTestCase
 
 
 def make_abstract_model(db):
-    """Taken from
-    https://datastax.github.io/python-driver/cqlengine/models.html#model-inheritance
-
+    """Taken from https://datastax.github.io/python-driver/cqlengine/models.html#model-inheritance
     but where we want the base classes to be in separate tables
     """
+
     class Pet(db.Model):
         __abstract__ = True
         # __table_name__ = 'pet'
@@ -37,7 +37,7 @@ def make_abstract_model(db):
         def bark_all_night(self):
             pass
 
-    return (Pet, Cat, Dog)
+    return Pet, Cat, Dog
 
 
 class AbstractModelTest(BaseTestCase):
@@ -51,6 +51,7 @@ class AbstractModelTest(BaseTestCase):
                            cuteness=9001)
         self.assertTrue(isinstance(mycat, Cat))
         self.assertEqual(mycat.cuteness, 9001)
+
 
 if __name__ == '__main__':
     unittest.main()

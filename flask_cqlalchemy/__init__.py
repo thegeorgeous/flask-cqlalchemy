@@ -6,18 +6,11 @@ flask_cqlalchemy
 :license: BSD, see LICENSE for more details
 
 """
-from cassandra.cqlengine import connection
-from cassandra.cqlengine.management import (
-    sync_table, create_keyspace_simple, sync_type
-)
 from cassandra.cqlengine import columns
+from cassandra.cqlengine import connection
 from cassandra.cqlengine import models
 from cassandra.cqlengine import usertype
-
-try:
-    from flask import _app_ctx_stack as stack
-except ImportError:
-    from flask import _request_ctx_stack as stack
+from cassandra.cqlengine.management import sync_table, create_keyspace_simple, sync_type
 
 
 class CQLAlchemy(object):
@@ -29,6 +22,8 @@ class CQLAlchemy(object):
 
     def __init__(self, app=None):
         """Constructor for the class"""
+        self._hosts_ = None
+        self._keyspace_ = None
         self.columns = columns
         self.Model = models.Model
         self.UserType = usertype.UserType
@@ -47,7 +42,7 @@ class CQLAlchemy(object):
         """
         self._hosts_ = app.config['CASSANDRA_HOSTS']
         self._keyspace_ = app.config['CASSANDRA_KEYSPACE']
-        consistency = app.config.get('CASSANDRA_CONSISTENCY', 1)
+        consistency = app.config.get('CASSANDRA_CONSISTENCY')  # by driver's default 'ConsistencyLevel.ONE' for all ops
         lazy_connect = app.config.get('CASSANDRA_LAZY_CONNECT', False)
         retry_connect = app.config.get('CASSANDRA_RETRY_CONNECT', False)
         setup_kwargs = app.config.get('CASSANDRA_SETUP_KWARGS', {})

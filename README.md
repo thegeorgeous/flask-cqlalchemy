@@ -3,37 +3,35 @@
 [![Latest Version](https://img.shields.io/pypi/v/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
 [![License](https://img.shields.io/pypi/l/Flask-CQLAlchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
 [![Python Versions](https://img.shields.io/pypi/pyversions/flask-cqlalchemy.svg)](https://pypi.python.org/pypi/Flask-CQLAlchemy)
-[![Build Status](https://travis-ci.org/thegeorgeous/flask-cqlalchemy.svg?branch=master)](https://travis-ci.org/thegeorgeous/flask-cqlalchemy)
+[![CI Build and Test](https://github.com/thegeorgeous/flask-cqlalchemy/actions/workflows/ci-build-test.yml/badge.svg?branch=master)](https://github.com/thegeorgeous/flask-cqlalchemy/actions/workflows/ci-build-test.yml)
 [![Code Climate](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy/badges/gpa.svg)](https://codeclimate.com/github/thegeorgeous/flask-cqlalchemy)
 
 
-Flask-CQLAlchemy handles connections to Cassandra clusters
-and gives a unified easier way to declare models and their
-columns
-
-**Now with support for PyPy**
+Flask-CQLAlchemy handles connections to Cassandra clusters and gives a unified easier way to declare models and
+their columns.
 
 ## Installation
 ```shell
-pip install flask-cqlalchemy
+$ pip install flask-cqlalchemy
 ```
 
 ## Dependencies
-As such Flask-CQLAlchemy depends only on the cassandra-driver. It is assumed
-that you already have flask installed.
+As Flask-CQLAlchemy depends only on the `cassandra-driver`. It is assumed that you already have `Flask` installed.
 
-Flask-CQLAlchemy has been tested with all minor versions greater than 2.6 of
-cassandra-driver. All previous versions of Flask-CQLAlchemy are deprecated.
-All tests are run against the latest patch version. If you have problems using
-the plugin, try updating to the latest patch version of the minor version you
-are using.
+Flask-CQLAlchemy has been tested with all versions of the `cassandra-driver>=3.22.0` and Cassandra 3.0.25, 3.11.11,
+4.x. All previous versions and configurations are deprecated. Used to be reported that plugin worked with
+`cassandra-driver>=2.5`, we can not guarantee proper work of older configurations so use on your own. Some versions of
+`cassandra-driver` can be incompatible with some versions of Cassandra itself either. 
+
+If you have problems using the plugin, try updating to the latest patch version of the minor version you are using.
 
 ## Example
+
 ```python
-#example_app.py
+# example_app.py
 import uuid
 from flask import Flask
-from flask.ext.cqlalchemy import CQLAlchemy
+from flask_cqlalchemy import CQLAlchemy
 
 app = Flask(__name__)
 app.config['CASSANDRA_HOSTS'] = ['127.0.0.1']
@@ -49,9 +47,9 @@ class User(db.Model):
 ### User Defined Types
 
 ```python
-#example_app_udt.py
-import uuid
+# example_app_udt.py
 from flask import Flask
+
 from flask_cqlalchemy import CQLAlchemy
 
 app = Flask(__name__)
@@ -61,60 +59,66 @@ app.config['CASSANDRA_SETUP_KWARGS'] = {'protocol_version': 3}
 db = CQLAlchemy(app)
 
 
-class address(db.UserType):
+class Address(db.UserType):
     street = db.columns.Text()
     zipcode = db.columns.Integer()
 
-class users(db.Model):
+
+class Users(db.Model):
     __keyspace__ = 'cqlengine'
     name = db.columns.Text(primary_key=True)
-    addr = db.columns.UserDefinedType(address)
-
+    addr = db.columns.UserDefinedType(Address)
 ```
 
 ## Usage
-Start a python shell
+Enter in Python Interpreter:
 ```python
->>>from example_app import db, User
->>>db.sync_db()
->>>user1 = User.create(username='John Doe')
+>>> from example_app import db, User
+>>> db.sync_db()
+>>> user1 = User.create(username='John Doe')
+>>> user1
+User(example_id=UUID('f94b6156-2964-4d46-919c-d6e4abcb9ef1'), username='John Doe')
 ```
+
 ### User Defined Types
-
 ```python
->>>from example_app_udt import db, address, users
->>>db.sync_db()
->>>user_address = address(street="Easy St.", zipcode=99999
+>>> from example_app_udt import db, Address, Users
+>>> db.sync_db()
+>>> user_address = Address(street="Easy Street, 12", zipcode=12345)
+>>> user = Users(name='John Appleseed', addr=user_address)
 >>> user
-users(name=u'Joe', addr=<example_app_udt.address object at 0x7f4498063310>)
+Users(name='John Appleseed', addr=<example_app_udt.Address object at 0x10fe56070>)
 >>> user.addr
-<example_app_udt.address object at 0x7f4498063310>
+<example_app_udt.Address object at 0x10fe56070>
 >>> user.addr.street
-u'Easy St.'
+'Easy Street, 12'
 >>> user.addr.zipcode
-99999
+12345
 ```
 
-For a complete list of available methods refer to the cqlengine
-[Model documentation](http://datastax.github.io/python-driver/api/cassandra/cqlengine/models.html)
+For a complete list of available methods refer to the
+[cassandra.cqlengine.models documentation](https://docs.datastax.com/en/developer/python-driver/latest/api/cassandra/cqlengine/models/).
 
 ## Configuration Options
-CQLAlchemy provides all the option available in the cqlengine connection.setup()
-method
+`CQLAlchemy` object provides following the options available for the
+[cqlengine `connection.setup()`](https://docs.datastax.com/en/developer/python-driver/latest/api/cassandra/cqlengine/connection/):
 
-* `CASSANDRA_HOSTS` - A list of hosts
-* `CASSANDRA_KEYSPACE` - The default keyspace to use
-* `CASSANDRA_CONSISTENCY` - The global default ConsistencyLevel
-* `CASSANDRA_LAZY_CONNECT` - True if should not connect until first use
-* `CASSANDRA_RETRY_CONNECT` - True if we should retry to connect even if there was
-  a connection failure initially
-* `CASSANDRA_SETUP_KWARGS` - Pass-through keyword arguments for Cluster()
+* `CASSANDRA_HOSTS` — A `list` of hosts
+* `CASSANDRA_KEYSPACE` — The default keyspace name to use
+* `CASSANDRA_CONSISTENCY` — The global default `ConsistencyLevel`, default is the driver's
+  [`Session.default_consistency_level`](https://docs.datastax.com/en/developer/python-driver/latest/api/cassandra/#cassandra.ConsistencyLevel)
+* `CASSANDRA_LAZY_CONNECT` — `True` if should not connect until first use, default is `False`
+* `CASSANDRA_RETRY_CONNECT` — `True` if we should retry to connect even if there was a connection failure initially,
+  default is `False`
+* `CASSANDRA_SETUP_KWARGS` — Pass-through keyword arguments for `Cluster()`
 
-## Beta Features
-Flask CQLAlchemy supports User Defined Types, provided you are using Cassandra
-versions 2.1 or above. However Travis only provides 2.0.9 for testing and so this
-feature has not undergone rigorous testing.
+## API
+`CQLAlchemy` object provides some helper methods for Cassandra database management:
+
+* `sync_db()` — Creates/Syncs all the tables corresponding to the models declared in the application.
+* `set_keyspace()` — Sets the keyspace for a session. Keyspaces once set will remain the default keyspace for the
+  duration of the session. If the change is temporary, it must be reverted back to the default keyspace explicitly.
 
 ## Contributing
-Found a bug? Need a feature? Open it in issues, or even better, open a PR.
-Please include tests in the PR.
+Found a bug? Need a feature? Open it in [issues](https://github.com/thegeorgeous/flask-cqlalchemy/issues), or even
+better, open a [PR](https://github.com/thegeorgeous/flask-cqlalchemy/pulls). Please include tests in the PR.

@@ -1,6 +1,7 @@
 import uuid
+
 from flask import Flask
-from flask.ext.cqlalchemy import CQLAlchemy
+from flask_cqlalchemy import CQLAlchemy
 
 app = Flask(__name__)
 app.config['CASSANDRA_HOSTS'] = ['127.0.0.1']
