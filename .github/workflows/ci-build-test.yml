@@ -1,0 +1,55 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+name: CI Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build-test:        
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["2.7", "3.7", "3.8", "3.9", "3.10", "pypy-3.7", "pypy-3.8"]
+        cassandra-driver-version: ["3.22.0", "3.23.0", "3.24.0", "3.25.0"]
+        cassandra-version: ["3.0.25", "3.11.11", "4"]
+    services:
+      cassandra:
+        image: cassandra:${{ matrix.cassandra-version }}
+        ports:
+          - 9042:9042
+    env:
+      CQLENG_ALLOW_SCHEMA_MANAGEMENT: 1
+      CASS_DRIVER_NO_CYTHON: 1
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}        
+    - name: Install dependencies cassandra-driver ${{ matrix.cassandra-driver-version }}, flask
+      run: |
+        python -m pip install --upgrade pip
+        pip install cassandra-driver==${{ matrix.cassandra-driver-version }}
+        pip install flask
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install build
+      run: |
+        python setup.py install
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Sleep for 60 seconds
+      # After Cassandra service start, it does not accept connections for a while
+      # https://unix.stackexchange.com/questions/241962/ this could be an issue for tests, so a delay included
+      uses: jakejarvis/wait-action@master
+      with:
+        time: "60s"
+    - name: Test with pytest
+      run: |
+        pytest

@@ -1,9 +1,11 @@
 import unittest
 import uuid
-from flask import Flask
-from flask_cqlalchemy import CQLAlchemy
-from cassandra.cqlengine.management import drop_keyspace, create_keyspace_simple
+
 from cassandra.cqlengine import models
+from cassandra.cqlengine.management import drop_keyspace, create_keyspace_simple
+from flask import Flask
+
+from flask_cqlalchemy import CQLAlchemy
 
 
 def make_user_model(db):
@@ -53,6 +55,7 @@ class BasicTestCase(BaseTestCase):
                          self.app.config['CASSANDRA_KEYSPACE'])
         self.assertEqual(self.db._keyspace_,
                          self.app.config['CASSANDRA_KEYSPACE'])
+
 
 if __name__ == '__main__':
     unittest.main()
