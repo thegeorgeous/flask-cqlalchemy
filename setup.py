@@ -15,7 +15,7 @@ from setuptools import setup
 
 setup(
     name='Flask-CQLAlchemy',
-    version='1.3.0',
+    version='2.0.0',
     url='http://thegeorgeous.com/flask-cqlalchemy',
     license='ISC',
     author='George Thomas',
@@ -30,6 +30,7 @@ setup(
     install_requires=[
         'cassandra-driver>=3.22.0',
     ],
+    options={"bdist_wheel": {"universal": True}},
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
